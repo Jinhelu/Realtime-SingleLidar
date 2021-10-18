@@ -1,0 +1,54 @@
+#lidar参数
+num_vertical_scans: 16				      # 雷达线数（总的scan层数：16
+num_horizontal_scans: 1800			    # 雷达一个scan返回的点个数：1800
+ground_scan_index: 7				        # 能扫描的地面的scan层数：0-7
+vertical_angle_bottom: -15          # 雷达竖直扫描角度上限 单位：degrees
+vertical_angle_top: 15              # 雷达竖直扫描角度下限 单位：degrees
+sensor_mount_angle: 0               # 雷达安装角度（pitch角）单位：degrees
+scan_period: 0.1                    # 一帧数据采集时间 单位：seconds		
+
+#单雷达人员跟踪与自主避障算法参数
+sor_vox_leaf_size: 0.035
+intensity_threshold: 196        # 雷达反射强度阈值
+r_error_point_search: 0.1       # 误差点搜索的范围
+n_error_point_closest: 4        # 近邻误差点的数量
+std_target_size: 0.35355        # 对角线长度
+max_x: 11
+min_x: -3.0
+max_y: 6.0
+min_y: -6.0
+max_z: 0.4
+min_z: -1.5                     # min_z是雷达离地面高度
+n_gridmap_x: 226
+n_gridmap_y: 226
+grid_scale: 0.1
+n_pixel_per_grid: 2
+
+aboveGround_noPrecise: 0.8
+aboveGround: 0.25
+n_ground_estimate: 40           # 地面估计数量
+OutPlaneDistance: 0.05
+CutAngleYaw: 32
+CutAnglePitch: 68
+MaxDeviaAngle_deg: 0.3          # 有精度地面的最大偏离均值角度
+
+#地面分割算法参数
+n_threads: 4            # 使用线程数量
+
+r_min: 0.5              # minimum point distance.
+r_max: 50               # maximum point distance.
+n_bins: 120             # number of radial bins.
+n_segments: 360         # number of radial segments.
+
+max_dist_to_line: 0.05  # maximum vertical distance of point to line to be considered ground.
+
+sensor_height: 1.8      # sensor height above ground.
+max_slope: 0.3          # maximum slope of a ground line.
+max_fit_error: 0.05     # maximum error of a point during line fit.
+long_threshold: 1.0     # distance between points after which they are considered far from each other.
+max_long_height: 0.1    # maximum height change to previous point in long line.
+max_start_height: 0.2   # maximum difference to estimated ground height to start a new line.
+line_search_angle: 0.1  # how far to search in angular direction to find a line [rad].
+
+latch: false            # latch output topics or not
+visualize: true         # visualize segmentation result - USE ONLY FOR DEBUGGING
