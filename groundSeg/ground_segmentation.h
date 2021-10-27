@@ -60,7 +60,7 @@ typedef pcl::PointCloud<pcl::PointXYZ> PointCloud;
 
 typedef std::pair<pcl::PointXYZ, pcl::PointXYZ> PointLine;
 
-/*从linefit_ground_segmentation_ros中跳转到这里*/
+/*从linefit_ground_segmentation中跳转到这里*/
 class GroundSegmentation {
 
 private:
@@ -78,7 +78,6 @@ private:
     /*我们设定了一个二维的坐标(d,z)对于各自的分割*/
     std::vector<Bin::MinZPoint> segment_coordinates_;
 
-    // Visualizer.
     /*可视化的设定*/
     std::shared_ptr<pcl::visualization::PCLVisualizer> viewer_; //构建一个pcl_viewer
 

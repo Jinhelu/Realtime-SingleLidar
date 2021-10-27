@@ -20,10 +20,4 @@ bool getLidarFrame(vector<PointCloud_I>& receiver, robosense::rslidar::RSLidarDe
                  robosense::rslidar_input::Input &InputObj, double &timestampFirst,long long &PCTime_u,
                  bool offLineFlag,int frequence);
 
-// recvDataLidar16 启动16线雷达的驱动函数
-void recvDataRSLidar16(volatile bool &RunFlag, InitParam &setParam, const string &pcapAddr， 
-                        PointCloudQueue<vector<PointCloud_I>,double,long long>& PC_I_Ptr_queue);
-
-void variableInit();
-
 #endif

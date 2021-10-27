@@ -21,7 +21,7 @@ bool getLidarFrame(vector<PointCloud_I>& receiver, robosense::rslidar::RSLidarDe
                  robosense::rslidar_input::Input &InputObj, double &timestampFirst,long long &PCTime_u,
                  bool offLineFlag,int frequence){
     double timestamp;
-    bool timeFalg=true;
+    bool timeFlag=true;
     for(auto &PC_I:receiver)
         PC_I.clear();
 
@@ -40,9 +40,9 @@ bool getLidarFrame(vector<PointCloud_I>& receiver, robosense::rslidar::RSLidarDe
             //int ret = decoder.processMsopPkt(pkt_buf+12, pointcloudI_buf, timestamp);
             int ret = decoder.processMsopPkt(pkt_buf, pointcloudI_buf, timestamp);
             if (ret == robosense::rslidar::RS_Decode_ok) {
-                if(timeFalg) {
+                if(timeFlag) {
                     timestampFirst=timestamp;
-                    timeFalg=false;
+                    timeFlag=false;
                 }
                 //cout << "Pkt共计点数：" << pointcloudI_buf.size() << endl << "时间：" << timestamp << endl;
                 //cout <<"**************************************************"<< endl << endl;
@@ -117,28 +117,7 @@ void listenRSLidar(robosense::rslidar::RSLidarDecoder<PointXYZITS> &decoder, rob
     vector<PointCloud_I> PC_I_raw_RS(csanIDTotal);
     double timeStamp;
     long long PCTime_u;
-    while(SensorFlag && getLidarFrame(PC_I_raw_RS, decoder, InputObj, timeStamp, PCTime_u,offLineFlag,frequence)){
-        PC_I_Ptr_queue->push(PC_I_raw_RS,timeStamp,PCTime_u);
+    while(SensorFlag && getLidarFrame(PC_I_raw_RS, decoder, InputObj, timeStamp, PCTime_u, offLineFlag, frequence)){
+        PC_I_Ptr_queue.push(PC_I_raw_RS,timeStamp,PCTime_u);
     }
-}
-
-void recvDataLidar16(volatile bool &RunFlag, InitParam &setParam, const string &pcapAddr, 
-                        PointCloudQueue<vector<PointCloud_I>,double,long long>& PC_I_Ptr_queue){
-    int Frequence_16 = 10;
-    bool offLineFlag = false;
-    if(pcapAddr != "")  offLineFlag = true;
-    robosense::rslidar::ST_Param param_RS16;
-    // 初始化16线雷达解码参数
-    initRSLidar16Param(param_RS16, setParam);
-    // 初始化16线雷达解码器
-    robosense::rslidar::RSLidarDecoder<PointXYZITS> decoder_RS16(param_RS16);
-    string device_ip16 = "192.168.1.216";
-    string pcap_file_dir16 = pcapAddr;
-    //string pcap_file_dir16 = "/home/ljh/lidarData/dataRecord_tree/trees.pcap";
-
-    uint16_t msop_port16 = 6616,difop_port16 = 7716;
-    robosense::rslidar_input::Input InputObj_RS16(device_ip16,msop_port16,difop_port16,pcap_file_dir16);
-
-    thread ListenRS16(listenRSLidar,ref(decoder_RS16),ref(InputObj_RS16), PC_I_Ptr_queue, 32,
-                      offLineFlag, Frequence_16, ref(RunFlag)); //16线ID号不连续
 }

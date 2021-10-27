@@ -57,9 +57,9 @@ struct InitParam{
     int CutAngleYaw; //估计地面时采样的左右边缘角度（deg）
     int CutAnglePitch; //估计地面时采样的俯角（deg）
     float MaxDeviaAngle_deg; //有精度地面的最大偏离均值角度
-    bool Visualize; // 是否可视化结果
+    // Visualize estimated ground.
+    bool visualize;
     InitParam() :
-        Visualize(false),
         SorVoxLeafSize(0.035),
         ThresholdIntensity(196),
         ErrrorPointSearchRadius(0.1),
@@ -81,7 +81,8 @@ struct InitParam{
         OutPlaneDistance(0.05),
         CutAngleYaw(32),
         CutAnglePitch(68),
-        MaxDeviaAngle_deg(0.3){}
+        MaxDeviaAngle_deg(0.3),
+        visualize(false) {}
 };
 
 #endif
