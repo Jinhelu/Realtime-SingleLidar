@@ -4,11 +4,12 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <cmath>
 using namespace std;
 
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
-#include <pcl/visualization/pcl_visualizer.h>
+#include <pcl/point_cloud.h>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/registration/icp.h>
@@ -57,8 +58,7 @@ struct InitParam{
     int CutAngleYaw; //估计地面时采样的左右边缘角度（deg）
     int CutAnglePitch; //估计地面时采样的俯角（deg）
     float MaxDeviaAngle_deg; //有精度地面的最大偏离均值角度
-    // Visualize estimated ground.
-    bool visualize;
+    bool visualize; // 是否进行可视化
     InitParam() :
         SorVoxLeafSize(0.035),
         ThresholdIntensity(196),

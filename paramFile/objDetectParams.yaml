@@ -1,0 +1,5 @@
+voxel_leaf_size: 0.035        # 体素滤波的网格大小值
+intensity_threshold: 196        # 雷达反射强度阈值
+r_reflectPoint_search: 0.1       # 误差点搜索的范围
+n_reflectPoint_closest: 4        # 近邻误差点的数量
+std_target_size: 0.35355        # 对角线长度

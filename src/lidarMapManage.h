@@ -12,7 +12,7 @@ void initRSLidar16Param(robosense::rslidar::ST_Param &lidarParam, InitParam &set
 
 // listenRSLidar 监听获取雷达信息
 void listenRSLidar(robosense::rslidar::RSLidarDecoder<PointXYZITS> &decoder, robosense::rslidar_input::Input &InputObj,
-              PointCloudQueue<vector<PointCloud_I>,double,long long>& PC_I_Ptr_queue, int csanIDTotal,
+              PointCloudQueue<vector<PointCloud_I>, double, long long>& PC_I_Ptr_queue, int csanIDTotal,
               bool offLineFlag, int frequence, volatile bool &SensorFlag);
 
 // getLidarFrame 获取雷达单帧数据

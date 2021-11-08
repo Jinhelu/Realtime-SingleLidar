@@ -15,7 +15,7 @@ Segment::Segment(const unsigned int& n_bins,
                  max_start_height_(max_start_height),
                  sensor_height_(sensor_height){}
 
-/*分割线拟合*/
+// 分割区域内的线拟合
 void Segment::fitSegmentLines() {
     auto line_start = bins_.begin();
     /*在整个的bins中找第一个点*/
@@ -39,8 +39,7 @@ void Segment::fitSegmentLines() {
             if (cur_point.d - current_line_points.back().d > long_threshold_) is_long_line = true;
             /*针对于后面几次遍历而言的，至少有三个点的情况下*/
             if (current_line_points.size() >= 2) {
-                // Get expected z value to possibly reject far away points.
-                /*获取远离点的z值*/
+                /*获取点的期望z值高度*/
                 double expected_z = std::numeric_limits<double>::max();
                 /*如果是长线段且当前线段的点数大于2，则我们获取到期待的z，这个在第一次迭代的时候不会被执行*/
                 if (is_long_line && current_line_points.size() > 2) {
@@ -52,13 +51,11 @@ void Segment::fitSegmentLines() {
                 cur_line = fitLocalLine(current_line_points);
                 /*将我们经过本地线拟合之后的*/
                 const double error = getMaxError(current_line_points, cur_line);
-                // Check if not a good line.
                 /*将算出来的误差和最大误差进行比较，判断是否是一个合格的线*/
                 if (error > max_error_ ||
                     std::fabs(cur_line.first) > max_slope_ ||
                     is_long_line && std::fabs(expected_z - cur_point.z) > max_long_height_) {
-                    // Add line until previous point as ground.
-                    /*添加线直到前一个点是地面点*/
+                    // 当线拟合直线不符合地面线定义，添加线直到前一个点是地面点
                     current_line_points.pop_back();
                     // Don't let lines with 2 base points through.
                     /*不要让有两个基点的线穿过*/
@@ -72,7 +69,6 @@ void Segment::fitSegmentLines() {
                     }
                     // Start new line.
                     is_long_line = false;
-                    /*erase在删除的过程中还是减少vector的size*/
                     current_line_points.erase(current_line_points.begin(), --current_line_points.end());
                     --line_iter;
                 }
@@ -160,7 +156,7 @@ double Segment::getMaxError(const std::list<Bin::MinZPoint> &points, const Local
     return max_error;
 }
 
-/*本地线拟合*/
+// 本地线拟合，返回参数是直线的k和b
 Segment::LocalLine Segment::fitLocalLine(const std::list<Bin::MinZPoint> &points) {
     const unsigned int n_points = points.size();
     Eigen::MatrixXd X(n_points, 2);

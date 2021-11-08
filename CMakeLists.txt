@@ -87,7 +87,9 @@ link_directories(${PROJECT_BINARY_DIR}/../lib)
 set(GROUNDSEG_FILES groundSeg/ground_segmentation.cpp groundSeg/segment.cpp groundSeg/bin.cpp)
 set(SOURCE_FILES src/main.cpp src/lidarMapManage.cpp src/lidarMapManage.h RSDecoder/input.cpp)
 set(PARAM_FILES paramFile/paramParse.cpp)
-add_executable(main ${SOURCE_FILES} ${GROUNDSEG_FILES} ${PARAM_FILES})
+set(VISUAL_FILES visualization/visualize.cpp)
+set(OBJDET_FILES objDetect/objDetect.cpp)
+add_executable(main ${SOURCE_FILES} ${GROUNDSEG_FILES} ${PARAM_FILES} ${VISUAL_FILES} ${OBJDET_FILES})
 target_link_libraries(main        
         pcap
         ${PCL_LIBRARIES}
@@ -96,8 +98,7 @@ target_link_libraries(main
         ${Eigen_LIBRARIES}
         -lpthread
         -lm
-        )
-
+)
 
 #[[
 set(SOURCE_FILES RSDecoder/input.cpp src/GetFrame_RS.cpp  src/GetFrame_Velo16.cpp

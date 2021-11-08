@@ -8,9 +8,11 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/ljh/quadrupedRobot/Realtime-SingleLidar/groundSeg/bin.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/groundSeg/bin.cpp.o"
   "/home/ljh/quadrupedRobot/Realtime-SingleLidar/groundSeg/ground_segmentation.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/groundSeg/ground_segmentation.cpp.o"
   "/home/ljh/quadrupedRobot/Realtime-SingleLidar/groundSeg/segment.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/groundSeg/segment.cpp.o"
+  "/home/ljh/quadrupedRobot/Realtime-SingleLidar/objDetect/objDetect.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/objDetect/objDetect.cpp.o"
   "/home/ljh/quadrupedRobot/Realtime-SingleLidar/paramFile/paramParse.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/paramFile/paramParse.cpp.o"
   "/home/ljh/quadrupedRobot/Realtime-SingleLidar/src/lidarMapManage.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/src/lidarMapManage.cpp.o"
   "/home/ljh/quadrupedRobot/Realtime-SingleLidar/src/main.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/src/main.cpp.o"
+  "/home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/visualize.cpp" "/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles/main.dir/visualization/visualize.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

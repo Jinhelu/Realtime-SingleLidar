@@ -225,6 +225,54 @@ CMakeFiles/main.dir/paramFile/paramParse.cpp.o.provides: CMakeFiles/main.dir/par
 CMakeFiles/main.dir/paramFile/paramParse.cpp.o.provides.build: CMakeFiles/main.dir/paramFile/paramParse.cpp.o
 
 
+CMakeFiles/main.dir/visualization/visualize.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/visualization/visualize.cpp.o: ../visualization/visualize.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main.dir/visualization/visualize.cpp.o"
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/visualization/visualize.cpp.o -c /home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/visualize.cpp
+
+CMakeFiles/main.dir/visualization/visualize.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/visualization/visualize.cpp.i"
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/visualize.cpp > CMakeFiles/main.dir/visualization/visualize.cpp.i
+
+CMakeFiles/main.dir/visualization/visualize.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/visualization/visualize.cpp.s"
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/visualize.cpp -o CMakeFiles/main.dir/visualization/visualize.cpp.s
+
+CMakeFiles/main.dir/visualization/visualize.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/visualization/visualize.cpp.o.requires
+
+CMakeFiles/main.dir/visualization/visualize.cpp.o.provides: CMakeFiles/main.dir/visualization/visualize.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/visualization/visualize.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/visualization/visualize.cpp.o.provides
+
+CMakeFiles/main.dir/visualization/visualize.cpp.o.provides.build: CMakeFiles/main.dir/visualization/visualize.cpp.o
+
+
+CMakeFiles/main.dir/objDetect/objDetect.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/objDetect/objDetect.cpp.o: ../objDetect/objDetect.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/objDetect/objDetect.cpp.o"
+	/usr/bin/x86_64-linux-gnu-g++-7  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/objDetect/objDetect.cpp.o -c /home/ljh/quadrupedRobot/Realtime-SingleLidar/objDetect/objDetect.cpp
+
+CMakeFiles/main.dir/objDetect/objDetect.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/objDetect/objDetect.cpp.i"
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/ljh/quadrupedRobot/Realtime-SingleLidar/objDetect/objDetect.cpp > CMakeFiles/main.dir/objDetect/objDetect.cpp.i
+
+CMakeFiles/main.dir/objDetect/objDetect.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/objDetect/objDetect.cpp.s"
+	/usr/bin/x86_64-linux-gnu-g++-7 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/ljh/quadrupedRobot/Realtime-SingleLidar/objDetect/objDetect.cpp -o CMakeFiles/main.dir/objDetect/objDetect.cpp.s
+
+CMakeFiles/main.dir/objDetect/objDetect.cpp.o.requires:
+
+.PHONY : CMakeFiles/main.dir/objDetect/objDetect.cpp.o.requires
+
+CMakeFiles/main.dir/objDetect/objDetect.cpp.o.provides: CMakeFiles/main.dir/objDetect/objDetect.cpp.o.requires
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/objDetect/objDetect.cpp.o.provides.build
+.PHONY : CMakeFiles/main.dir/objDetect/objDetect.cpp.o.provides
+
+CMakeFiles/main.dir/objDetect/objDetect.cpp.o.provides.build: CMakeFiles/main.dir/objDetect/objDetect.cpp.o
+
+
 # Object files for target main
 main_OBJECTS = \
 "CMakeFiles/main.dir/src/main.cpp.o" \
@@ -233,7 +281,9 @@ main_OBJECTS = \
 "CMakeFiles/main.dir/groundSeg/ground_segmentation.cpp.o" \
 "CMakeFiles/main.dir/groundSeg/segment.cpp.o" \
 "CMakeFiles/main.dir/groundSeg/bin.cpp.o" \
-"CMakeFiles/main.dir/paramFile/paramParse.cpp.o"
+"CMakeFiles/main.dir/paramFile/paramParse.cpp.o" \
+"CMakeFiles/main.dir/visualization/visualize.cpp.o" \
+"CMakeFiles/main.dir/objDetect/objDetect.cpp.o"
 
 # External object files for target main
 main_EXTERNAL_OBJECTS =
@@ -245,6 +295,8 @@ main: CMakeFiles/main.dir/groundSeg/ground_segmentation.cpp.o
 main: CMakeFiles/main.dir/groundSeg/segment.cpp.o
 main: CMakeFiles/main.dir/groundSeg/bin.cpp.o
 main: CMakeFiles/main.dir/paramFile/paramParse.cpp.o
+main: CMakeFiles/main.dir/visualization/visualize.cpp.o
+main: CMakeFiles/main.dir/objDetect/objDetect.cpp.o
 main: CMakeFiles/main.dir/build.make
 main: /usr/lib/x86_64-linux-gnu/libboost_system.so
 main: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so
@@ -563,7 +615,7 @@ main: /usr/lib/x86_64-linux-gnu/libopencv_imgcodecs.so.3.2.0
 main: /usr/lib/x86_64-linux-gnu/libopencv_imgproc.so.3.2.0
 main: /usr/lib/x86_64-linux-gnu/libopencv_core.so.3.2.0
 main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/ljh/quadrupedRobot/Realtime-SingleLidar/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -578,6 +630,8 @@ CMakeFiles/main.dir/requires: CMakeFiles/main.dir/groundSeg/ground_segmentation.
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/groundSeg/segment.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/groundSeg/bin.cpp.o.requires
 CMakeFiles/main.dir/requires: CMakeFiles/main.dir/paramFile/paramParse.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/visualization/visualize.cpp.o.requires
+CMakeFiles/main.dir/requires: CMakeFiles/main.dir/objDetect/objDetect.cpp.o.requires
 
 .PHONY : CMakeFiles/main.dir/requires
 

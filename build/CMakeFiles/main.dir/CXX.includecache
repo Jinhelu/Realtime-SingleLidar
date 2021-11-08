@@ -18,6 +18,10 @@ pcl/visualization/pcl_visualizer.h
 segment.h
 ../groundSeg/segment.h
 
+..//objDetect/objDetect.h
+utils/common.h
+-
+
 ..//paramFile/paramParse.h
 iostream
 -
@@ -27,6 +31,8 @@ utils/common.h
 ../paramFile/utils/common.h
 groundSeg/ground_segmentation.h
 ../paramFile/groundSeg/ground_segmentation.h
+objDetect/objDetect.h
+../paramFile/objDetect/objDetect.h
 
 ..//utils/common.h
 iostream
@@ -35,11 +41,13 @@ cstring
 -
 vector
 -
+cmath
+-
 pcl/io/pcd_io.h
 -
 pcl/point_types.h
 -
-pcl/visualization/pcl_visualizer.h
+pcl/point_cloud.h
 -
 pcl/filters/voxel_grid.h
 -
@@ -70,6 +78,20 @@ mutex
 common.h
 ../utils/common.h
 
+..//utils/typeConvert.h
+common.h
+../utils/common.h
+
+..//visualization/visualize.h
+pcl/visualization/pcl_visualizer.h
+-
+chrono
+-
+thread
+-
+utils/common.h
+../visualization/utils/common.h
+
 ../groundSeg/bin.h
 atomic
 -
@@ -93,11 +115,13 @@ cstring
 -
 vector
 -
+cmath
+-
 pcl/io/pcd_io.h
 -
 pcl/point_types.h
 -
-pcl/visualization/pcl_visualizer.h
+pcl/point_cloud.h
 -
 pcl/filters/voxel_grid.h
 -
@@ -230,6 +254,14 @@ map
 bin.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/groundSeg/bin.h
 
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/objDetect/objDetect.cpp
+objDetect.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/objDetect/objDetect.h
+
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/objDetect/objDetect.h
+utils/common.h
+-
+
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/paramFile/paramParse.cpp
 paramParse.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/paramFile/paramParse.h
@@ -243,6 +275,8 @@ utils/common.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/paramFile/utils/common.h
 groundSeg/ground_segmentation.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/paramFile/groundSeg/ground_segmentation.h
+objDetect/objDetect.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/paramFile/objDetect/objDetect.h
 
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/src/lidarMapManage.cpp
 lidarMapManage.h
@@ -271,10 +305,32 @@ utils/lidarMapQueue.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/src/utils/lidarMapQueue.h
 utils/common.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/src/utils/common.h
+utils/typeConvert.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/src/utils/typeConvert.h
 paramFile/paramParse.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/src/paramFile/paramParse.h
 lidarMapManage.h
 /home/ljh/quadrupedRobot/Realtime-SingleLidar/src/lidarMapManage.h
+visualization/visualize.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/src/visualization/visualize.h
+groundSeg/ground_segmentation.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/src/groundSeg/ground_segmentation.h
+objDetect/objDetect.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/src/objDetect/objDetect.h
+
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/visualize.cpp
+visualize.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/visualize.h
+
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/visualize.h
+pcl/visualization/pcl_visualizer.h
+-
+chrono
+-
+thread
+-
+utils/common.h
+/home/ljh/quadrupedRobot/Realtime-SingleLidar/visualization/utils/common.h
 
 /usr/include/eigen3/Eigen/Cholesky
 Core

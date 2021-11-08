@@ -231,6 +231,33 @@ groundSeg/segment.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/groundSeg/segment.cpp.s
 .PHONY : groundSeg/segment.cpp.s
 
+objDetect/objDetect.o: objDetect/objDetect.cpp.o
+
+.PHONY : objDetect/objDetect.o
+
+# target to build an object file
+objDetect/objDetect.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/objDetect/objDetect.cpp.o
+.PHONY : objDetect/objDetect.cpp.o
+
+objDetect/objDetect.i: objDetect/objDetect.cpp.i
+
+.PHONY : objDetect/objDetect.i
+
+# target to preprocess a source file
+objDetect/objDetect.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/objDetect/objDetect.cpp.i
+.PHONY : objDetect/objDetect.cpp.i
+
+objDetect/objDetect.s: objDetect/objDetect.cpp.s
+
+.PHONY : objDetect/objDetect.s
+
+# target to generate assembly for a file
+objDetect/objDetect.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/objDetect/objDetect.cpp.s
+.PHONY : objDetect/objDetect.cpp.s
+
 paramFile/paramParse.o: paramFile/paramParse.cpp.o
 
 .PHONY : paramFile/paramParse.o
@@ -312,6 +339,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+visualization/visualize.o: visualization/visualize.cpp.o
+
+.PHONY : visualization/visualize.o
+
+# target to build an object file
+visualization/visualize.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/visualization/visualize.cpp.o
+.PHONY : visualization/visualize.cpp.o
+
+visualization/visualize.i: visualization/visualize.cpp.i
+
+.PHONY : visualization/visualize.i
+
+# target to preprocess a source file
+visualization/visualize.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/visualization/visualize.cpp.i
+.PHONY : visualization/visualize.cpp.i
+
+visualization/visualize.s: visualization/visualize.cpp.s
+
+.PHONY : visualization/visualize.s
+
+# target to generate assembly for a file
+visualization/visualize.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/visualization/visualize.cpp.s
+.PHONY : visualization/visualize.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -333,6 +387,9 @@ help:
 	@echo "... groundSeg/segment.o"
 	@echo "... groundSeg/segment.i"
 	@echo "... groundSeg/segment.s"
+	@echo "... objDetect/objDetect.o"
+	@echo "... objDetect/objDetect.i"
+	@echo "... objDetect/objDetect.s"
 	@echo "... paramFile/paramParse.o"
 	@echo "... paramFile/paramParse.i"
 	@echo "... paramFile/paramParse.s"
@@ -342,6 +399,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... visualization/visualize.o"
+	@echo "... visualization/visualize.i"
+	@echo "... visualization/visualize.s"
 .PHONY : help
 
 

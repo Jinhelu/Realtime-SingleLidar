@@ -30,27 +30,27 @@ void GroundSegmentation::visualize(const std::list<PointLine>& lines,
                                    const PointCloud::ConstPtr& min_cloud,
                                    const PointCloud::ConstPtr& ground_cloud,
                                    const PointCloud::ConstPtr& obstacle_cloud) {
-  viewer_->setBackgroundColor (0, 0, 0);
-  viewer_->addCoordinateSystem (1.0);
-  viewer_->initCameraParameters ();
-  viewer_->setCameraPosition(-2.0, 0, 2.0, 1.0, 0, 0);
-  visualizePointCloud(min_cloud, "min_cloud");
-  viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR,
-                                             0.0f, 1.0f, 0.0f,
-                                             "min_cloud");
-  viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE,
-                                             2.0f,
-                                             "min_cloud");
-  visualizePointCloud(ground_cloud, "ground_cloud");
-  viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR,
-                                             1.0f, 0.0f, 0.0f,
-                                             "ground_cloud");
-  visualizePointCloud(obstacle_cloud, "obstacle_cloud");
-  visualizeLines(lines);
-  while (!viewer_->wasStopped ()){
-      viewer_->spinOnce (100);
-      std::this_thread::sleep_for(std::chrono::microseconds(100000));
-  }
+    viewer_->setBackgroundColor (0, 0, 0);
+    viewer_->addCoordinateSystem (1.0);
+    viewer_->initCameraParameters ();
+    viewer_->setCameraPosition(-2.0, 0, 2.0, 1.0, 0, 0);
+    visualizePointCloud(min_cloud, "min_cloud");
+    viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR,
+                                                0.0f, 1.0f, 0.0f,
+                                                "min_cloud");
+    viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE,
+                                                2.0f,
+                                                "min_cloud");
+    visualizePointCloud(ground_cloud, "ground_cloud");
+    viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR,
+                                                1.0f, 0.0f, 0.0f,
+                                                "ground_cloud");
+    visualizePointCloud(obstacle_cloud, "obstacle_cloud");
+    visualizeLines(lines);
+    while (!viewer_->wasStopped ()){
+        viewer_->spinOnce (100);
+        std::this_thread::sleep_for(std::chrono::microseconds(100000));
+    }
 }
 
 /*地面分割的构造函数*/
@@ -63,7 +63,7 @@ GroundSegmentation::GroundSegmentation(const GroundSegmentationParams& params) :
                                          params.max_long_height,
                                          params.max_start_height,
                                          params.sensor_height)) {
-  if (params.visualize) viewer_ = std::make_shared<pcl::visualization::PCLVisualizer>("3D Viewer");
+    if (params.visualize) viewer_ = std::make_shared<pcl::visualization::PCLVisualizer>("3D Viewer");
 }
 
 /*地面分割的分割函数*/
@@ -91,7 +91,7 @@ void GroundSegmentation::segment(const PointCloud& cloud, std::vector<int>* segm
     /*从这里可以看到对于点云属于障碍物还是属于地面点进行了标签的划分*/
     assignCluster(segmentation);
 
-    /*如果是进行了可视化的操作，则进行一下的操作*/
+    /*如果是进行了可视化的操作，则进行以下的显示操作*/
     if (params_.visualize) {
         PointCloud::Ptr obstacle_cloud(new PointCloud());
         // 获取地面点云
@@ -125,7 +125,7 @@ void GroundSegmentation::getLines(std::list<PointLine> *lines) {
     }
 }
 
-/*这里是获取线的操作*/
+// 进行多线程的分割线拟合操作，如果需要可视化就保存拟合的线
 void GroundSegmentation::lineFitThread(const unsigned int start_index,
                                        const unsigned int end_index,
                                        std::list<PointLine> *lines, std::mutex* lines_mutex) {
@@ -174,7 +174,7 @@ pcl::PointXYZ GroundSegmentation::minZPointTo3d(const Bin::MinZPoint &min_z_poin
     return point;
 }
 
-/*分配集群，将传入的分割进行簇的划分*/
+/*分配集群，将传入的分割进行聚类*/
 void GroundSegmentation::assignCluster(std::vector<int>* segmentation) {
     std::vector<std::thread> thread_vec(params_.n_threads);
     const size_t cloud_size = segmentation->size();
@@ -306,7 +306,7 @@ void GroundSegmentation::insertionThread(const PointCloud& cloud,
     /*对于起始索引和终止索引进行遍历*/
     for (unsigned int i = start_index; i < end_index; ++i) {
         pcl::PointXYZ point(cloud[i]);
-        /*这里是算模长*/
+        /*计算模长*/
         const double range_square = point.x * point.x + point.y * point.y;
         const double range = sqrt(range_square);
         /*判断模场是否属于最小值和最大值之间*/

@@ -66,16 +66,13 @@ class GroundSegmentation {
 private:
     const GroundSegmentationParams params_;
 
-    // Access with segments_[segment][bin].
-    /*定义了一个划分*/
+    // 定义多个分割区域，segments_[segment][bin]
     std::vector<Segment> segments_;
 
-    // Bin index of every point.
-    /*设定了一个针对于所有点而言的bin的索引*/
+    // 设定了一个针对于所有点而言的segment-bin的索引，
     std::vector<std::pair<int, int> > bin_index_;
 
-    // 2D coordinates (d, z) of every point in its respective segment.
-    /*我们设定了一个二维的坐标(d,z)对于各自的分割*/
+    /*设定了一个二维的坐标(d,z)对于对应的分割， 每个bin都有一个作为代表点*/
     std::vector<Bin::MinZPoint> segment_coordinates_;
 
     /*可视化的设定*/

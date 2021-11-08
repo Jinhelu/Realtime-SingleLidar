@@ -6,6 +6,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/groundSeg/segment.cpp.o"
   "CMakeFiles/main.dir/groundSeg/bin.cpp.o"
   "CMakeFiles/main.dir/paramFile/paramParse.cpp.o"
+  "CMakeFiles/main.dir/visualization/visualize.cpp.o"
+  "CMakeFiles/main.dir/objDetect/objDetect.cpp.o"
   "main.pdb"
   "main"
 )
