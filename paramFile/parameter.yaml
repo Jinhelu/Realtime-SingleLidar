@@ -9,26 +9,9 @@ scan_period: 0.1                    # 一帧数据采集时间 单位：seconds
 
 #单雷达人员跟踪与自主避障算法参数
 visualize: true
-sor_vox_leaf_size: 0.035        # 体素滤波的网格大小值
-intensity_threshold: 196        # 雷达反射强度阈值
-r_error_point_search: 0.1       # 误差点搜索的范围
-n_error_point_closest: 4        # 近邻误差点的数量
-std_target_size: 0.35355        # 对角线长度
-max_x: 11                       # 直通滤波的数值范围
-min_x: -3.0
-max_y: 6.0
-min_y: -6.0
-max_z: 0.4
-min_z: -1.5                     # min_z是雷达离地面高度
-n_gridmap_x: 226
-n_gridmap_y: 226
-grid_scale: 0.1
-n_pixel_per_grid: 2
-
+pcapAddr: '../trees.pcap'
+#下面是没有用到的参数
 aboveGround_noPrecise: 0.8
 aboveGround: 0.25               # 距离估计地面xx范围内的点，被视为地面
-n_ground_estimate: 40           # 地面估计数量
-OutPlaneDistance: 0.05
 CutAngleYaw: 32
 CutAnglePitch: 68
-MaxDeviaAngle_deg: 0.3          # 有精度地面的最大偏离均值角度

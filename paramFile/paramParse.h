@@ -6,6 +6,7 @@
 #include "utils/common.h"
 #include "groundSeg/ground_segmentation.h"
 #include "objDetect/objDetect.h"
+#include "gridMap/gridMapManage.h"
 using namespace std;
 
 // getParam自定义读取yaml文件函数
@@ -20,5 +21,8 @@ void getGroundSegParameter(GroundSegmentationParams& params);
 
 // getObjDetectParameter 加载目标检测算法参数
 void getObjDetectParameter(ObjDetectParams& params);
+
+// getGridMapParameter 加载生成栅格地图算法参数
+void getGridMapParameter(GridMapParams& params);
 
 #endif

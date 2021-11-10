@@ -1,0 +1,13 @@
+max_x: 11                       # 直通滤波的数值范围
+min_x: -3.0
+max_y: 6.0
+min_y: -6.0
+max_z: 0.4
+min_z: -1.5                     # min_z是雷达离地面高度
+n_gridmap_x: 226
+n_gridmap_y: 226
+grid_scale: 0.1
+n_pixel_per_grid: 2
+n_ground_estimate: 40           # 进行地面方程参数估计的迭代次数
+plane_dist_threshold:  0.05     # 地面方程参数估计时的距离阈值
+max_deviation_deg: 5           # 有精度地面在雷达坐标系中的最大偏离pitch、roll轴角度 

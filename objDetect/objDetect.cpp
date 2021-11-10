@@ -42,6 +42,9 @@ void ObjDetect::getObjectCloud(const PointCloud_I::Ptr& inputCloud, PointCloud_I
 
 // 获取引导目标整体点云
 bool ObjDetect::getObjectCloudPosition(const PointCloud_I::Ptr &targetCenterCloud, GuideObject& guideObject, double& time_stt_us){
+    // 目标点云太少，直接返回错误
+    if(targetCenterCloud->size() < 5) return false;
+    
     float maxDistance = 0;// 点云簇中两点间的最大距离
     float secDistance = 0;// 点云簇中两点间的第二大距离
     PointT heartPoint(0,0,0);//中心点坐标

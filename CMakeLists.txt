@@ -89,7 +89,8 @@ set(SOURCE_FILES src/main.cpp src/lidarMapManage.cpp src/lidarMapManage.h RSDeco
 set(PARAM_FILES paramFile/paramParse.cpp)
 set(VISUAL_FILES visualization/visualize.cpp)
 set(OBJDET_FILES objDetect/objDetect.cpp)
-add_executable(main ${SOURCE_FILES} ${GROUNDSEG_FILES} ${PARAM_FILES} ${VISUAL_FILES} ${OBJDET_FILES})
+set(GRIDMAP_FILES gridMap/gridMapManage.cpp gridMap/gridMap.cpp)
+add_executable(main ${SOURCE_FILES} ${GROUNDSEG_FILES} ${PARAM_FILES} ${VISUAL_FILES} ${OBJDET_FILES} ${GRIDMAP_FILES})
 target_link_libraries(main        
         pcap
         ${PCL_LIBRARIES}

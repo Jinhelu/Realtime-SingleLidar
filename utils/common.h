@@ -45,7 +45,6 @@ struct InitParam{
     float ErrrorPointSearchRadius;
     int ErrrorPointNearNum;
     float StdTargetSize;//对角线长度
-    double max_x,min_x,max_y,min_y,max_z,min_z;//min_z是雷达离地面高度
 
     int GridmapNum_x, GridmapNum_y;//x,y两边的删格数目
     double GridScale;//每个删格代表的实际长度 单位：米
@@ -59,18 +58,13 @@ struct InitParam{
     int CutAnglePitch; //估计地面时采样的俯角（deg）
     float MaxDeviaAngle_deg; //有精度地面的最大偏离均值角度
     bool visualize; // 是否进行可视化
+    string pcapAddr;
     InitParam() :
         SorVoxLeafSize(0.035),
         ThresholdIntensity(196),
         ErrrorPointSearchRadius(0.1),
         ErrrorPointNearNum(4),
         StdTargetSize(0.35355),
-        max_x(11),
-        min_x(-3.0),
-        max_y(6.0),
-        min_y(-6.0),
-        max_z(0.4),
-        min_z(-1.5),
         GridmapNum_x(226),
         GridmapNum_y(226),
         GridScale(0.1),
@@ -82,6 +76,7 @@ struct InitParam{
         CutAngleYaw(32),
         CutAnglePitch(68),
         MaxDeviaAngle_deg(0.3),
+        pcapAddr("../trees.pcap"),
         visualize(false) {}
 };
 
