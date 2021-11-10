@@ -40,42 +40,17 @@ struct PointXYZITS{
 
 // InitParam 算法中的参数
 struct InitParam{
-    float SorVoxLeafSize;
-    int ThresholdIntensity;
-    float ErrrorPointSearchRadius;
-    int ErrrorPointNearNum;
-    float StdTargetSize;//对角线长度
-
-    int GridmapNum_x, GridmapNum_y;//x,y两边的删格数目
-    double GridScale;//每个删格代表的实际长度 单位：米
-    int PixelPerGrid;//显示地图时候一个删格边长占据的像素
-
     float AboveGround_NoPrecise; //地面精度低时删除点距地面的高度
     float AboveGround; //地面精度正常时删除点距地面的高度
-    int GroundEstimateNum; //估计地面时迭代随机采样的次数
-    float OutPlaneDistance; //随机采样时局外点的距离
     int CutAngleYaw; //估计地面时采样的左右边缘角度（deg）
     int CutAnglePitch; //估计地面时采样的俯角（deg）
-    float MaxDeviaAngle_deg; //有精度地面的最大偏离均值角度
     bool visualize; // 是否进行可视化
     string pcapAddr;
     InitParam() :
-        SorVoxLeafSize(0.035),
-        ThresholdIntensity(196),
-        ErrrorPointSearchRadius(0.1),
-        ErrrorPointNearNum(4),
-        StdTargetSize(0.35355),
-        GridmapNum_x(226),
-        GridmapNum_y(226),
-        GridScale(0.1),
-        PixelPerGrid(2),
         AboveGround_NoPrecise(0.8),
         AboveGround(0.25),
-        GroundEstimateNum(40),
-        OutPlaneDistance(0.05),
         CutAngleYaw(32),
         CutAnglePitch(68),
-        MaxDeviaAngle_deg(0.3),
         pcapAddr("../trees.pcap"),
         visualize(false) {}
 };

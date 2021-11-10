@@ -1,6 +1,6 @@
 #include <iostream>
 #include <unistd.h>
-#include "utils/lidarMapQueue.h"
+#include "utils/lidarMap_t.h"
 #include "utils/common.h"
 #include "utils/typeConvert.h"
 #include "paramFile/paramParse.h"
@@ -14,7 +14,7 @@ using namespace std;
 // 判断程序是否用于调试
 //#define test
  
-void LidarMapThreadFun(volatile bool &RunFlag, LidarMapQueue& lidarMap_t){
+void LidarMapThreadFun(volatile bool &RunFlag, LidarMap_t& lidarMap_th){
 #ifndef test
     InitParam setParam;// 声明并初始化设定参数
     getParameter(setParam);
@@ -164,7 +164,7 @@ void LidarMapThreadFun(volatile bool &RunFlag, LidarMapQueue& lidarMap_t){
             gridMapMag.returnGridmapVector(lidarmap.map);
             gridMapMag.RealCoord2GridCoord(guideObj.position.x, guideObj.position.y,
                                             lidarmap.target_column, lidarmap.target_row);
-            lidarMap_t.push(lidarmap); 
+            lidarMap_th.push(lidarmap); 
             // TODO:调用轨迹规划
             // 显示起点和目标点 
             if(setParam.visualize){
@@ -185,7 +185,7 @@ void LidarMapThreadFun(volatile bool &RunFlag, LidarMapQueue& lidarMap_t){
 }
 
 int main(){
-    LidarMapQueue lidarMap_th(100);
+    LidarMap_t lidarMap_th;
 
     volatile bool RunFlag = true;
 
