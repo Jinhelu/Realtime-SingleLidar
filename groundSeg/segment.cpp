@@ -55,9 +55,8 @@ void Segment::fitSegmentLines() {
                 if (error > max_error_ ||
                     std::fabs(cur_line.first) > max_slope_ ||
                     is_long_line && std::fabs(expected_z - cur_point.z) > max_long_height_) {
-                    // 当线拟合直线不符合地面线定义，添加线直到前一个点是地面点
+                    // 当线拟合直线不符合地面线定义，删除线上的点直到前一个点是地面点
                     current_line_points.pop_back();
-                    // Don't let lines with 2 base points through.
                     /*不要让有两个基点的线穿过*/
                     if (current_line_points.size() >= 3) {
                         /*对于当前线点进行本地拟合，得到一条新的线*/

@@ -21,10 +21,6 @@ struct GridMapParams {
     int n_gridmap_x;
     int n_gridmap_y;
     int n_pixel_per_grid;
-    int n_ground_estimate;
-    float plane_dist_threshold;
-    float max_deviation_deg;
-
     GridMapParams():
         max_x(11),                    //直通滤波的数值范围
         min_x(-3.0),
@@ -35,26 +31,23 @@ struct GridMapParams {
         n_gridmap_x(226),
         n_gridmap_y(226),
         grid_scale(0.1),
-        n_pixel_per_grid(2),
-        n_ground_estimate(40),
-        plane_dist_threshold(0.05),
-        max_deviation_deg(10) {}
-
+        n_pixel_per_grid(2) {}
 };
-
 
 class GridMapManage
 {
 private:
-    const GridMapParams params_;
+    GridMapParams params_;
     GridMap gridMap_;
 public:
-    GridMapManage(const GridMapParams& params_ = GridMapParams());
-    // 平面投影滤波
+    GridMapManage(const InitParams& params);
+
+    // 障碍物重检测滤波，剔除例如树冠等不影响机器人通行的元素
+    void getObstacleEntity(const PointCloud::Ptr& inputCloud, const PointCloud::Ptr& outputCloud);
+
+    // 平面投影，将点云投影到同一平面（为地面平面）
     void groundCastFilter(const PointCloud::Ptr& inputCloud, pcl::ModelCoefficients& coefficients,
                        const PointCloud::Ptr& outputCloud);
-    // 根据地面点云估计地面方程参数
-    void groundEquationEstimate(PointCloud::Ptr& pointcloud, pcl::ModelCoefficients& PlaneCoeff2Show);
 
     //将投影的平面点云转换为栅格地图
     void planeCloud2Gridmap(const PointCloud::Ptr& map_base_plane);
@@ -71,10 +64,7 @@ public:
     void returnGridmapVector(vector<vector<int>>& mapMatrix){
         mapMatrix = gridMap_.returnGridmapVector();
     }
-
 private:
-    // 使用ransac方法获取平面方程数据
-    void planeMatchRANSAC(PointCloud::Ptr& pointcloud, std::vector<int>& inliers, pcl::ModelCoefficients& PlaneCoeff2Show);
     //判断线段是否经过矩形 矩形顶点 x最小值 y最小值        长       宽   过原点线段端点 x    y ; 经过该矩形为true  不经过为false
     bool LineRecJudge (double x, double y, double deltaX, double deltaY, double EndX, double EndY);
     //判断点在线段哪一侧      横坐标   纵坐标    端点横坐标   端点纵坐标; 上侧为 true , 下侧为false;

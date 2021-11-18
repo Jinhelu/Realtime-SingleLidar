@@ -1,7 +1,7 @@
 #include "lidarMapManage.h"
 
 
-void initRSLidar16Param(robosense::rslidar::ST_Param &lidarParam, InitParam &setParam){
+void initRSLidar16Param(robosense::rslidar::ST_Param &lidarParam, InitParams &setParam){
     lidarParam.lidar = robosense::rslidar::RS_Type_Lidar16;
     lidarParam.resolution = robosense::rslidar::RS_Resolution_5mm;
     //lidarParam.intensity = robosense::rslidar::RS_INTENSITY_EXTERN;

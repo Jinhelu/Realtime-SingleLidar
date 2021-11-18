@@ -8,8 +8,8 @@ GridMap::GridMap(int WidthGridNum, int HeightGridNum){
         deque<Grid> XCoordState (WidthGridNum, temp);
         deque<deque<Grid> > YCoord(HeightGridNum, XCoordState);
         _YCoord = YCoord;
-        _laser_x = WidthGridNum/2-1;//实际上不属于任何一个栅格，在两格中间
-        _laser_y = HeightGridNum/2-1;//实际上不属于任何一个栅格，在两格中间
+        _laser_x = WidthGridNum/2 - 1;//实际上不属于任何一个栅格，在两格中间
+        _laser_y = HeightGridNum/2 - 1;//实际上不属于任何一个栅格，在两格中间
     }
 }
 
@@ -51,11 +51,11 @@ GridMap::GridMap(const string& adress){
 //从激光雷达坐标转化为原点坐标(从0开始)，栅格地图原点坐标系为世界坐标系
 // 输入：栅格中相对雷达的坐标x、坐标y；返回：栅格中相对栅格原点的坐标x、坐标y
 void GridMap::laserCoord2GridCoord (int& x_laser,int& y_laser,int& x_grid,int& y_grid) const {
-    if(x_laser >= 0) x_grid= _laser_x + x_laser;
-    else x_grid= _laser_x + x_laser+1;
+    if(x_laser >= 0) x_grid = _laser_x + x_laser;
+    else x_grid = _laser_x + x_laser+1;
 
-    if(y_laser > 0) y_grid=_laser_y - y_laser+1;
-    else y_grid=_laser_y - y_laser;
+    if(y_laser > 0) y_grid = _laser_y - y_laser+1;
+    else y_grid =_laser_y - y_laser;
 }
 
 //某删格在删格原点下的坐标(从0开始)转化为在激光雷达下的坐标
@@ -64,7 +64,7 @@ void GridMap::gridCoord2LaserCoord(int& x_grid, int& y_grid, int& x_laser, int& 
     if(x_grid >= _laser_x) x_laser = x_grid - _laser_x;
     else x_laser = x_grid - _laser_x -1;
 
-    if( y_grid > _laser_y) y_laser=_laser_y - y_grid + 1;
+    if( y_grid > _laser_y) y_laser =_laser_y - y_grid + 1;
     else y_laser = _laser_y- y_grid;
 }
 
@@ -112,7 +112,7 @@ void GridMap::enlargeGridmap(int x_grid, int y_grid){
         deque<Grid> LineTemp(_YCoord[0].size(),temp);
         int deltaY = (-y_grid);
         while(deltaY){_YCoord.push_front(LineTemp);  deltaY--;}
-        _laser_y = _laser_y + (-y_grid);
+        _laser_y += (-y_grid);
         //cout << "y负方向扩容" << endl;
     }
 }
@@ -137,8 +137,8 @@ void GridMap::ModifyGridState(int x_grid, int y_grid, gridState state){
 void GridMap::modifyGridStateinLaserCoord(int x_laser, int y_laser, gridState state){
     int x_grid,y_grid;
     this->laserCoord2GridCoord(x_laser, y_laser, x_grid, y_grid);// 雷达坐标系转换到栅格坐标系
-    this->enlargeGridmap(x_grid, y_grid);//此时的_laser_x和_laser_y已经改变
-    this->laserCoord2GridCoord(x_laser, y_laser, x_grid, y_grid);//此时一定是合法的 x_grid, y_grid
+    this->enlargeGridmap(x_grid, y_grid);//此时雷达在栅格图中的坐标_laser_x和_laser_y已经改变
+    this->laserCoord2GridCoord(x_laser, y_laser, x_grid, y_grid);//一定是合法的 x_grid, y_grid
     this->ModifyGridState(x_grid, y_grid, state);
 }
 

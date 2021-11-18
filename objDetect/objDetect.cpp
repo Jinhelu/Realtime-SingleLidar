@@ -1,9 +1,12 @@
 #include "objDetect.h"
 
-
 // 引导目标检测构造函数
-ObjDetect::ObjDetect(const ObjDetectParams& params) :
-    params_(params){
+ObjDetect::ObjDetect(const InitParams& params){
+    params_.intensity_threshold = params.intensity_threshold;
+    params_.n_reflectPoint_closest = params.n_reflectPoint_closest;
+    params_.r_reflectPoint_search = params.r_reflectPoint_search;
+    params_.std_target_size = params.std_target_size;
+    params_.voxel_leaf_size = params.voxel_leaf_size;
 }
 
 // 获取引导目标中心点云

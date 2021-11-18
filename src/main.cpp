@@ -9,6 +9,7 @@
 #include "groundSeg/ground_segmentation.h"
 #include "objDetect/objDetect.h"
 #include "gridMap/gridMapManage.h"
+#include "groundPlaneCalibration/groundPlaneCali.h"
 using namespace std;
 
 // 判断程序是否用于调试
@@ -16,15 +17,8 @@ using namespace std;
  
 void LidarMapThreadFun(volatile bool &RunFlag, LidarMap_t& lidarMap_th){
 #ifndef test
-    InitParam setParam;// 声明并初始化设定参数
+    InitParams setParam;// 声明并初始化设定参数
     getParameter(setParam);
-    GroundSegmentationParams groundSegParams;// 地面分割算法参数
-    getGroundSegParameter(groundSegParams);
-    ObjDetectParams objectDetectParams;// 目标识别参数
-    getObjDetectParameter(objectDetectParams);
-    GridMapParams gridMapParams;// 栅格地图参数
-    getGridMapParameter(gridMapParams);
-
 #endif
     /****** 启动线程读取雷达数据 ******/
     PointCloudQueue<vector<PointCloud_I>, double, long long> PCIPtr_Q16(5);// 声明存放点云的消息队列
@@ -108,24 +102,39 @@ void LidarMapThreadFun(volatile bool &RunFlag, LidarMap_t& lidarMap_th){
             cout << "镜头遮挡，无法计算" << endl;
             continue;
         }
-
         // 1. 提取地面点
-        GroundSegmentation segmenter(groundSegParams);
+        GroundSegmentation segmenter(setParam);
         std::vector<int> labels;// 标记数组，1是地面点，0是非地面点。
-        pcl::copyPointCloud(*PC_I_raw_RS16, *PC_Raw_RS16);// 将XYZI类型转换为XYZ类型
+        XYZI2XYZ(PC_I_raw_RS16, PC_Raw_RS16);
         segmenter.segment(*PC_Raw_RS16, &labels);
         for (size_t i = 0; i < PC_I_raw_RS16->size(); ++i) {
             if (labels[i] == 1) ground_cloud->push_back(PC_I_raw_RS16->at(i));//1：标记为地面点
             else not_ground_cloud->push_back(PC_I_raw_RS16->at(i));
         }
-        if(ground_cloud->size()<100){
+        if(ground_cloud->size() < 100){
             cout<<"缺失地面点云，此帧处理结束"<<endl;
             continue;
         }
+        // 在这个地方完成地面方程估计
+        // 2. 地面方程估计，进行地平面矫正
+        GroundPlaneCali  groundCali(setParam);
+        pcl::ModelCoefficients PlaneCoeff2Show;// 定义平面方程参数对象
+        bool needGroundCali = false;
         XYZI2XYZ(ground_cloud, ground_cloud_xyz);
+        groundCali.groundEquationEstimate(ground_cloud_xyz, PlaneCoeff2Show, needGroundCali);
+        if(needGroundCali){
+            Eigen::Matrix3f rotationMatrix = groundCali.getCaliRotateMatrix(PlaneCoeff2Show);
+            //矫正完之后，地面平面为xoy平面，修改地面方程的参数
+            PlaneCoeff2Show.values[0] = 0;
+            PlaneCoeff2Show.values[1] = 0;
+            PlaneCoeff2Show.values[2] = 1;
+            PlaneCoeff2Show.values[3] = 0;
+            //矫正所有点云，因为地面点云后续没有使用，可以不进行旋转
+            convertPointCloud(not_ground_cloud, rotationMatrix);
+        }
         XYZI2XYZ(not_ground_cloud, not_ground_cloud_xyz);
-        // 2. 提取引导人员信息
-        ObjDetect objDetector(objectDetectParams);
+        // 3. 提取引导人员信息
+        ObjDetect objDetector(setParam);
         objDetector.getObjectCloud(not_ground_cloud, targetCenterCloud, targetCubeCloud);
         bool getTargetFlag = false;
         if(objDetector.getObjectCloudPosition(targetCenterCloud, guideObj, time_head_us16)){
@@ -141,12 +150,9 @@ void LidarMapThreadFun(volatile bool &RunFlag, LidarMap_t& lidarMap_th){
         }else{
             *map_build_cloud = *not_ground_cloud;
         }
-        // 3. 生成栅格地图
-        pcl::ModelCoefficients PlaneCoeff2Show;// 定义平面方程参数对象
-        
+        // 4. 生成栅格地图
         XYZI2XYZ(map_build_cloud, map_base_plane_temp);
-        GridMapManage gridMapMag(gridMapParams);
-        gridMapMag.groundEquationEstimate(ground_cloud_xyz, PlaneCoeff2Show);
+        GridMapManage gridMapMag(setParam);
         gridMapMag.groundCastFilter(map_base_plane_temp, PlaneCoeff2Show, map_base_plane);
         gridMapMag.planeCloud2Gridmap(map_base_plane);
 
@@ -160,22 +166,22 @@ void LidarMapThreadFun(volatile bool &RunFlag, LidarMap_t& lidarMap_th){
             LidarMap lidarmap;
             lidarmap.start_column =  gridMapMag.getLaserPosNumX();
             lidarmap.start_row = gridMapMag.getLaserPosNumY();
-            // 下一行有bug
             gridMapMag.returnGridmapVector(lidarmap.map);
             gridMapMag.RealCoord2GridCoord(guideObj.position.x, guideObj.position.y,
                                             lidarmap.target_column, lidarmap.target_row);
             lidarMap_th.push(lidarmap); 
             // TODO:调用轨迹规划
             // 显示起点和目标点 
-            if(setParam.visualize){
-                myVisual.pointShow(0, lidarmap.start_column, lidarmap.start_row, gridMapParams.n_pixel_per_grid, gridMat,"grid");
-                myVisual.pointShow(0, lidarmap.start_column, lidarmap.start_row, gridMapParams.n_pixel_per_grid, gridMat,"grid");
-            }
+            // if(setParam.visualize){
+            //     myVisual.pointShow(0, lidarmap.start_column, lidarmap.start_row, setParam.n_pixel_per_grid, gridMat,"grid");
+            //     myVisual.pointShow(1, lidarmap.target_column, lidarmap.target_row, setParam.n_pixel_per_grid, gridMat,"grid");
+            // }
         }
         // 更新显示
         if(setParam.visualize){
             myVisual.imShowCVMat("grid", gridMat);
-            myVisual.myWaitKey(0);
+            // myVisual.myWaitKey(0);这一行报错
+            myVisual.myWaitKey(100);
             myVisual.updateVisual(ground_cloud_xyz, "ground_cloud");
             myVisual.updateVisual(not_ground_cloud_xyz, "obstacle_cloud");
             myVisual.spinOnce();

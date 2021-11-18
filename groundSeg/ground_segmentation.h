@@ -8,6 +8,7 @@
 #include <pcl/visualization/pcl_visualizer.h>
 
 #include "segment.h"
+#include "utils/common.h"
 
 struct GroundSegmentationParams {
     GroundSegmentationParams() :
@@ -64,7 +65,7 @@ typedef std::pair<pcl::PointXYZ, pcl::PointXYZ> PointLine;
 class GroundSegmentation {
 
 private:
-    const GroundSegmentationParams params_;
+    GroundSegmentationParams params_;
 
     // 定义多个分割区域，segments_[segment][bin]
     std::vector<Segment> segments_;
@@ -122,7 +123,7 @@ private:
 
 public:
 
-    GroundSegmentation(const GroundSegmentationParams& params = GroundSegmentationParams());
+    GroundSegmentation(const InitParams& params);
 
     void segment(const PointCloud& cloud, std::vector<int>* segmentation);
 

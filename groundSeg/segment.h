@@ -64,4 +64,4 @@ public:
 
 };
 
-#endif /* GROUND_SEGMENTATION_SEGMENT_H_ */
+#endif

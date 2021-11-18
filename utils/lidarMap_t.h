@@ -4,7 +4,6 @@
 #include <queue>
 #include <mutex>
 #include <condition_variable>
-#include "common.h"
 using namespace std;
 
 //地图和规划线程间共用的类 包含起终点 二维数组

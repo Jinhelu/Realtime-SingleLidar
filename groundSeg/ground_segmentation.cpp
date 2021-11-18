@@ -54,8 +54,7 @@ void GroundSegmentation::visualize(const std::list<PointLine>& lines,
 }
 
 /*地面分割的构造函数*/
-GroundSegmentation::GroundSegmentation(const GroundSegmentationParams& params) :
-    params_(params),
+GroundSegmentation::GroundSegmentation(const InitParams& params) :
     segments_(params.n_segments, Segment(params.n_bins,
                                          params.max_slope,
                                          params.max_error_square,
@@ -63,7 +62,20 @@ GroundSegmentation::GroundSegmentation(const GroundSegmentationParams& params) :
                                          params.max_long_height,
                                          params.max_start_height,
                                          params.sensor_height)) {
-    if (params.visualize) viewer_ = std::make_shared<pcl::visualization::PCLVisualizer>("3D Viewer");
+    params_.max_dist_to_line = params.max_dist_to_line;
+    params_.long_threshold = params.long_threshold;
+    params_.max_error_square = params.max_error_square;
+    params_.max_long_height = params.max_long_height;
+    params_.max_slope = params.max_slope;
+    params_.max_start_height = params.max_start_height;
+    params_.n_bins = params.n_bins;
+    params_.n_segments = params.n_segments;
+    params_.n_threads =  params.n_threads;
+    params_.r_max_square = params.r_max_square; 
+    params_.r_min_square = params.r_min_square;
+    params_.sensor_height = params.sensor_height;
+    params_.visualize = params.visualize_ground;
+    if (params.visualize_ground) viewer_ = std::make_shared<pcl::visualization::PCLVisualizer>("3D Viewer");
 }
 
 /*地面分割的分割函数*/

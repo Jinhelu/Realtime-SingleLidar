@@ -38,4 +38,18 @@ void XYZI2XYZRGB(const PointCloud_I::Ptr& raw, PointCloud_C::Ptr& result){
     }
 }
 
+void convertPointCloud(const PointCloud_I::Ptr& inputCloud, Eigen::Matrix3f rotationMatrix){
+    for(size_t i=0; i<inputCloud->points.size(); i++){
+        float &point16_x = inputCloud->points[i].x;
+        float &point16_y = inputCloud->points[i].y;
+        float &point16_z = inputCloud->points[i].z;
+
+        Eigen::Vector3f point16_E(point16_x, point16_y, point16_z);
+        point16_E = rotationMatrix * point16_E;
+        point16_x = point16_E.x();
+        point16_y = point16_E.y();
+        point16_z = point16_E.z();
+    }
+}
+
 #endif

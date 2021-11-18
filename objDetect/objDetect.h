@@ -63,10 +63,10 @@ struct ObjDetectParams {
 
 class ObjDetect {
 private:
-    const ObjDetectParams params_;
+    ObjDetectParams params_;
 
 public:
-    ObjDetect(const ObjDetectParams& params_ = ObjDetectParams());
+    ObjDetect(const InitParams& params);
     
     // 获取引导目标中心点云
     void getObjectCloud(const PointCloud_I::Ptr& inputCloud, PointCloud_I::Ptr& targetCenterCloud,

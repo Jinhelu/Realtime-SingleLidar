@@ -25,9 +25,9 @@ public:
     void spinOnce();
     /******* opencv显示 ********/
     // 显示起点和终点图像
-    void pointShow(int flag, int x, int y, int delta, const cv::Mat& MapImage, const std::string ImageName);
+    void pointShow(int flag, int x, int y, int delta, const cv::Mat& MapImage, const cv::String& ImageName);
     // OpenCV图像显示
-    void imShowCVMat(const std::string s, cv::Mat& CVMat);
+    void imShowCVMat(const cv::String& s, cv::Mat& CVMat);
     // 图像显示延迟
     void myWaitKey(const int delay);
 private:
