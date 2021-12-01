@@ -4,7 +4,7 @@
 #include "common.h"
 
 //带反射率的点云转换为坐标点云
-void XYZI2XYZ(const PointCloud_I::Ptr& raw,PointCloud::Ptr& result){
+inline void XYZI2XYZ(const PointCloud_I::Ptr& raw,PointCloud::Ptr& result){
     result->clear();
     for(int i=0; i < raw->size() ;i++){
         PointT p;
@@ -16,7 +16,7 @@ void XYZI2XYZ(const PointCloud_I::Ptr& raw,PointCloud::Ptr& result){
 }
 
 //带反射率的点云转换为颜色点云，用于显示
-void XYZI2XYZRGB(const PointCloud_I::Ptr& raw, PointCloud_C::Ptr& result){
+inline void XYZI2XYZRGB(const PointCloud_I::Ptr& raw, PointCloud_C::Ptr& result){
     result->clear();
     for(int i=0; i < raw->size();i++){
         PointT_C p;
@@ -38,7 +38,8 @@ void XYZI2XYZRGB(const PointCloud_I::Ptr& raw, PointCloud_C::Ptr& result){
     }
 }
 
-void convertPointCloud(const PointCloud_I::Ptr& inputCloud, Eigen::Matrix3f rotationMatrix){
+// 点云空间坐标信息转换
+inline void convertPointCloud(const PointCloud_I::Ptr& inputCloud, Eigen::Matrix3f rotationMatrix){
     for(size_t i=0; i<inputCloud->points.size(); i++){
         float &point16_x = inputCloud->points[i].x;
         float &point16_y = inputCloud->points[i].y;
