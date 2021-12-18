@@ -9,7 +9,7 @@ scan_period: 0.1                    # 一帧数据采集时间 单位：seconds
 
 #单雷达人员跟踪与自主避障算法参数
 visualize: true
-pcapAddr: '../trees_with_object_lidar16.pcap'
+pcapAddr: ''
 
 #地面分割算法参数
 n_threads: 4            # 使用线程数量
@@ -18,7 +18,8 @@ r_max: 10               # maximum point distance.
 n_bins: 60             # number of radial bins.
 n_segments: 360         # number of radial segments.
 max_dist_to_line: 0.05  # maximum vertical distance of point to line to be considered ground.
-sensor_height: 0.503      # sensor height above ground.
+#sensor_height: 0.503      # sensor height above ground.
+sensor_height: 1.05
 max_slope: 0.3          # maximum slope of a ground line.
 max_fit_error: 0.05     # maximum error of a point during line fit.
 long_threshold: 1.0     # distance between points after which they are considered far from each other.
@@ -35,7 +36,7 @@ groundCali_deg_threshold: 2     # 估计地面偏离的角度大于阈值时，�
 
 # 人员跟随算法参数
 voxel_leaf_size: 0.035        # 体素滤波的网格大小值
-intensity_threshold: 196        # 雷达反射强度阈值
+intensity_threshold: 220        # 雷达反射强度阈值
 r_reflectPoint_search: 0.1       # 误差点搜索的范围
 n_reflectPoint_closest: 4        # 近邻误差点的数量
 std_target_size: 0.35355        # 对角线长度

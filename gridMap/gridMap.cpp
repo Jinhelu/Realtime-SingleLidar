@@ -8,7 +8,7 @@ GridMap::GridMap(int WidthGridNum, int HeightGridNum){
         deque<Grid> XCoordState (WidthGridNum, temp);
         deque<deque<Grid> > YCoord(HeightGridNum, XCoordState);
         _YCoord = YCoord;
-        _laser_x = WidthGridNum/2 - 1;//实际上不属于任何一个栅格，在两格中间
+        _laser_x = WidthGridNum/4 - 1;//实际上不属于任何一个栅格，在两格中间
         _laser_y = HeightGridNum/2 - 1;//实际上不属于任何一个栅格，在两格中间
     }
 }

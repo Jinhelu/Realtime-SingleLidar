@@ -26,18 +26,21 @@ void LidarMapThreadFun(volatile bool &RunFlag, LidarMap_t& lidarMap_th){
     bool offLineFlag = false;
     string pcapAddr = setParam.pcapAddr;
     if(pcapAddr != "") offLineFlag = true;
+    /**************** 初始化16线雷达 **************/
     robosense::rslidar::ST_Param param_RS16;
     // 初始化16线雷达解码参数
     initRSLidar16Param(param_RS16, setParam);
     // 初始化16线雷达解码器
     robosense::rslidar::RSLidarDecoder<PointXYZITS> decoder_RS16(param_RS16);
-    string device_ip16 = "192.168.1.216";
+    string device_ip16 = "192.168.3.200";
     string pcap_file_dir16 = pcapAddr;
-    uint16_t msop_port16 = 6616,difop_port16 = 7716;
+    uint16_t msop_port16 = 6699,difop_port16 = 7788;
     robosense::rslidar_input::Input InputObj_RS16(device_ip16,msop_port16,difop_port16,pcap_file_dir16);
 
     thread ListenRS16(listenRSLidar, ref(decoder_RS16), ref(InputObj_RS16), ref(PCIPtr_Q16), 32,
                       offLineFlag, Frequence_16, ref(RunFlag)); //16线ID号不连续
+    /**************** 初始化32线雷达 ******************/
+
     /*** 声明变量 ***/
     double time_head_us16 = 0;// 当前帧头部时间
     long long time_tail_us16 = 0;// 当前帧尾部时间
@@ -63,13 +66,6 @@ void LidarMapThreadFun(volatile bool &RunFlag, LidarMap_t& lidarMap_th){
     
     /********** 主线程逻辑 ****************/
     while(RunFlag){
-        #ifdef test 
-        // 动态获取参数便于调试
-        InitParam setParam;// 声明并初始化人员跟随参数
-        getParameter(paramAddr, setParam);
-        GroundSegmentationParams groundSegParams;// 声明并初始化地面分割参数 
-        getGroundSegParameter(paramAddr, groundSegParams);
-        #endif
         /*********** 启动算法主体函数 ****************/
         // 获取原始点云信息
         PCIPtr_Q16.latestElem(&PC_I_raw16_scanID, &time_head_us16, &time_tail_us16);
