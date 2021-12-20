@@ -5,11 +5,15 @@
 #include <cstring>
 #include <vector>
 #include <cmath>
+#include <thread>
+#include <mutex>
 using namespace std;
 
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
+#include <pcl/range_image/range_image.h>
+#include <pcl/filters/filter.h>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/kdtree/kdtree_flann.h>
 #include <pcl/registration/icp.h>
@@ -17,6 +21,7 @@ using namespace std;
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/Dense>
 
+#include <opencv2/opencv.hpp>
 
 // 点云类型和点云指针类型重定义
 typedef pcl::PointXYZ PointT;
@@ -38,6 +43,56 @@ struct PointXYZITS{
     int scanID;
 };
 
+// 里程计参数
+// VLP-16 or RSLidar-16
+const int N_SCAN = 16;
+const int Horizon_SCAN = 1800;
+const float ang_res_x = 0.2;      //水平方向上角度分辨率
+const float ang_res_y = 2.0;      //竖直方向上角度分辨率
+const int SCAN_PERIOD = 0.1; // 雷达扫描
+// const float ang_bottom = 15.0+0.1;//雷达竖直方向角度区间[-15, 15],取底部角15，防止计算出现负数
+// const int groundScanInd = 7;      //认为地面只会出现在0-7线这8条scan中
+
+const float sensorMountAngle = 0.0; // 雷达倾斜角度
+const float segmentTheta = 1.0472;  // segmentTheta=1.0472<==>60度,在imageProjection中用于判断平面
+const int segmentValidPointNum = 5; // 聚类中有效点的最小数目
+const int segmentValidLineNum = 3;  // 聚类中竖直方向有效线数的最小数目
+const float segmentAlphaX = ang_res_x / 180.0 * M_PI;
+const float segmentAlphaY = ang_res_y / 180.0 * M_PI;
+
+const int edgeFeatureNum = 2;
+const int surfFeatureNum = 4;
+const int sectionsTotal = 6;
+const float edgeThreshold = 0.1;
+const float surfThreshold = 0.1;
+const float nearestFeatureSearchSqDist = 25;
+// 特征点的平滑程度
+struct Smoothness{
+    float value;
+    int   ind;
+};
+
+struct by_value{ 
+    bool operator()(Smoothness const &left, Smoothness const &right) { 
+        return left.value < right.value;
+    }
+};
+
+// SegInfo点云分割的信息存储格式
+struct SegInfo{
+    std::vector<float> segmentedCloudRange;
+    std::vector<int> segmentedCloudColInd;
+    std::vector<int> startRingIndex;
+    std::vector<int> endRingIndex;
+    std::vector<int> segmentedCloudGroundFlag;
+    SegInfo(){
+        startRingIndex.resize(N_SCAN, 0);
+        endRingIndex.resize(N_SCAN, 0);
+        segmentedCloudRange.resize(N_SCAN * Horizon_SCAN, 0.0);
+        segmentedCloudColInd.resize(N_SCAN * Horizon_SCAN, -1);
+        segmentedCloudGroundFlag.resize(N_SCAN * Horizon_SCAN, 0);
+    }
+};
 // InitParams 算法中的参数
 struct InitParams{
     /**** 地面分割算法参数 *******/
@@ -78,8 +133,10 @@ struct InitParams{
     int n_gridmap_y;       // y方向栅格个数
     int n_pixel_per_grid;  // 每个栅格边长占据的像素个数，用于opencv显示
     /**** 主函数控制参数 ****/
-    bool visualize; // 是否进行可视化
+    bool visualize;               // 是否进行可视化
     string pcapAddr;
+    int pattern_select_switch;   //0是人员跟随，1是自主导航
+
     InitParams() :
         visualize_ground(false),
         r_min_square(0.3 * 0.3),
@@ -115,7 +172,8 @@ struct InitParams{
         grid_scale(0.1),
         n_pixel_per_grid(2),
         pcapAddr(""),
-        visualize(false) {}
+        visualize(false),
+        pattern_select_switch(0) {}
 };
 
 #endif

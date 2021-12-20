@@ -8,7 +8,7 @@
 #include "../RSDecoder/rslidar_packet.h"
 
 // initRSLidar16Param 16线雷达参数初始化
-void initRSLidar16Param(robosense::rslidar::ST_Param &lidarParam, InitParams &setParam);
+void initRSLidar16Param(robosense::rslidar::ST_Param &lidarParam);
 
 // listenRSLidar 监听获取雷达信息
 void listenRSLidar(robosense::rslidar::RSLidarDecoder<PointXYZITS> &decoder, robosense::rslidar_input::Input &InputObj,

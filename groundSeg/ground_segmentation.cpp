@@ -53,6 +53,11 @@ void GroundSegmentation::visualize(const std::list<PointLine>& lines,
     }
 }
 
+// 默认构造函数
+GroundSegmentation::GroundSegmentation(){
+
+}
+
 /*地面分割的构造函数*/
 GroundSegmentation::GroundSegmentation(const InitParams& params) :
     segments_(params.n_segments, Segment(params.n_bins,
@@ -78,11 +83,23 @@ GroundSegmentation::GroundSegmentation(const InitParams& params) :
     if (params.visualize_ground) viewer_ = std::make_shared<pcl::visualization::PCLVisualizer>("3D Viewer");
 }
 
+// 赋值构造函数
+GroundSegmentation& GroundSegmentation::operator=(const GroundSegmentation &rhs){
+    if(this == &rhs){
+        return *this;
+    }
+    for(size_t i=0; i<rhs.segments_.size(); i++){
+        this->segments_.push_back(rhs.segments_[i]);
+    }
+    this->params_ = rhs.params_;
+    return *this;
+}
+
 /*地面分割的分割函数*/
 void GroundSegmentation::segment(const PointCloud& cloud, std::vector<int>* segmentation) {
     /*初始化一些比较基础的东西*/
-    std::cout << "Segmenting cloud with " << cloud.size() << " points...\n";
-    std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+    //std::cout << "Segmenting cloud with " << cloud.size() << " points...\n";
+    //std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
     segmentation->clear();
     segmentation->resize(cloud.size(), 0);
     bin_index_.resize(cloud.size());
@@ -116,9 +133,9 @@ void GroundSegmentation::segment(const PointCloud& cloud, std::vector<int>* segm
         getMinZPointCloud(min_cloud.get());
         visualize(lines, min_cloud, ground_cloud, obstacle_cloud);
     }
-    std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> fp_ms = end - start;
-    std::cout << "Done! Took " << fp_ms.count() << "ms\n";
+    //std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
+    //std::chrono::duration<double, std::milli> fp_ms = end - start;
+    //std::cout << "Done! Took " << fp_ms.count() << "ms\n";
 }
 
 /*获取到线*/

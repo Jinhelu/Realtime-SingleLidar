@@ -92,7 +92,9 @@ set(VISUAL_FILES visualization/visualize.cpp)
 set(OBJDET_FILES objDetect/objDetect.cpp)
 set(GRIDMAP_FILES gridMap/gridMapManage.cpp gridMap/gridMap.cpp)
 set(GROUNDCALI_FILES groundPlaneCalibration/groundPlaneCali.cpp)
-add_executable(main ${SOURCE_FILES} ${GROUNDSEG_FILES} ${PARAM_FILES} ${VISUAL_FILES} ${OBJDET_FILES} ${GRIDMAP_FILES} ${GROUNDCALI_FILES})
+set(LOAM_FILES lidarOdom/pointCloudSeg.cpp lidarOdom/featureExtraction.cpp lidarOdom/lidarOdometry.cpp)
+add_executable(main ${SOURCE_FILES} ${GROUNDSEG_FILES} ${PARAM_FILES} ${VISUAL_FILES} 
+        ${OBJDET_FILES} ${GRIDMAP_FILES} ${GROUNDCALI_FILES} ${LOAM_FILES})
 target_link_libraries(main        
         pcap
         ${PCL_LIBRARIES}

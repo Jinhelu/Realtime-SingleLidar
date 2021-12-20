@@ -122,8 +122,11 @@ private:
     void visualize(const std::list<PointLine>& lines, const PointCloud::ConstPtr& cloud, const PointCloud::ConstPtr& ground_cloud, const PointCloud::ConstPtr& obstacle_cloud);
 
 public:
-
+    GroundSegmentation();
+    
     GroundSegmentation(const InitParams& params);
+
+    GroundSegmentation &operator=(const GroundSegmentation &);
 
     void segment(const PointCloud& cloud, std::vector<int>* segmentation);
 

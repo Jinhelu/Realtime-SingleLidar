@@ -16,11 +16,11 @@ T getParam(const YAML::Node& node,const string& name,const T& defaultValue){
 
 // getParameter使用yaml配置文件加载算法中的参数（便于tune）
 void getParameter(InitParams& params){
-    //1.加载参数文件
+    //1.加载程序控制参数
     YAML::Node yamlNodeObj = YAML::LoadFile("../paramFile/parameter.yaml");
     params.visualize = getParam<bool>(yamlNodeObj,"visualize",params.visualize);
     params.pcapAddr = getParam<string>(yamlNodeObj,"pcapAddr",params.pcapAddr);
-
+    params.pattern_select_switch = getParam<int>(yamlNodeObj,"pattern_select_switch",params.pattern_select_switch);
     //2.加载地面分割算法参数
     params.visualize_ground = getParam<bool>(yamlNodeObj,"visualize_ground",params.visualize_ground);
     params.n_bins = getParam<float>(yamlNodeObj,"n_bins",params.n_bins);

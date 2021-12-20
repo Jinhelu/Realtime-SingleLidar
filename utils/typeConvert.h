@@ -53,4 +53,14 @@ inline void convertPointCloud(const PointCloud_I::Ptr& inputCloud, Eigen::Matrix
     }
 }
 
+// rad2deg弧度转角度
+inline double rad2deg(double radians){
+    return radians * 180.0 / M_PI;
+}
+// deg2rad角度转弧度
+inline double deg2rad(double degrees){
+    return degrees * M_PI / 180.0;
+}
+
+
 #endif
