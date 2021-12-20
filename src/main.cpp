@@ -297,18 +297,20 @@ int main(){
     else if(setParam.pattern_select_switch == 1){
         thread NavigationThread(AutonomousNav, ref(RunFlag), ref(setParam), ref(lidarMap_th),
                                 ref(odometry_out_channel), ref(featureExtra_out_channel));
+        
+        ofstream outfile;
+        outfile.open("odomData.txt", ios::out | ios::trunc );
         while(true){
             //取里程计值
             OdometryOut odomOut;
             odometry_out_channel.pop_uptodate(odomOut);
             for(int i=0; i<6; i++){
-                cout<<odomOut.transformDataSum[i]<<" ";
+                outfile<<odomOut.transformDataSum[i]<<" ";
             }
-            cout<<endl;
+            outfile<<endl;
         }
         NavigationThread.join();
     }
-
     cout << endl << "main exit in usually." << endl;
     return 0;
 }

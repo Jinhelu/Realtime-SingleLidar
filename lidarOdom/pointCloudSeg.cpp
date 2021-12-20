@@ -77,6 +77,7 @@ void PointCloudSeg::unorderedCloud2Structure(const PointCloud_I::Ptr& laserCloud
     cloudSize = laserCloudIn->points.size();
 
     for (size_t i = 0; i < cloudSize; ++i){
+        if(laserCloudIn->points[i].intensity == -1) continue;
 
         thisPoint.x = laserCloudIn->points[i].x;
         thisPoint.y = laserCloudIn->points[i].y;

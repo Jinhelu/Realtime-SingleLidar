@@ -31,7 +31,8 @@ private:
 
 private:
     void initializationValue();
-    
+    // 雷达坐标系到运动坐标系的变换
+    void coordinateTransform();
     // 计算平滑程度
     void calculateSmoothness();
     // 标记点云中相互遮挡又靠的很近的点

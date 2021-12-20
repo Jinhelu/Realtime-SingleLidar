@@ -35,6 +35,7 @@ void LidarOdometry::initializationValue(){
     matP = cv::Mat(6, 6, CV_32F, cv::Scalar::all(0));
 
 }
+
 // 矫正雷达点云,将点云向初始时刻对齐(单帧内)
 void LidarOdometry::transformCloudToStart(PointT_I const *const pi, PointT_I *const po){
     double s; // 插值系数
@@ -405,7 +406,7 @@ bool LidarOdometry::calculateTransformationSurf(int iterCount){
 
         float aty = -b6 * coeff_.x + c4 * coeff_.y + b2 * coeff_.z;
 
-        float d2 = coeff_.intensity;
+        float d2 = coeff_.intensity;// 点到平面距离
 
         matA.at<float>(i, 0) = arx;
         matA.at<float>(i, 1) = arz;
@@ -701,9 +702,13 @@ void LidarOdometry::checkSystemInitialization(){
 // 发布里程计数据，将线程中计算得到的里程计传递出去
 void LidarOdometry::publishOdometry(){
     OdometryOut out;
-    for(int i=0; i<6; i++){
-        out.transformDataSum[i] = transformSum[i]; 
-    }
+    // 输出参数，并进行zxy坐标系到xyz坐标系的转换
+    out.transformDataSum[0] = transformSum[2];
+    out.transformDataSum[1] = transformSum[0];
+    out.transformDataSum[2] = transformSum[1];
+    out.transformDataSum[3] = transformSum[5];
+    out.transformDataSum[4] = transformSum[3];
+    out.transformDataSum[5] = transformSum[4];
     output_channel_.push(out);
 }
 
@@ -752,6 +757,10 @@ void LidarOdometry::runLidarOdometry(){
         if(!systemInited){
             checkSystemInitialization();
             continue;
+        }
+        // 当前配准初始值设置为0
+        for(int i=0; i<6; i++){
+            transformCur[i] = 0.0;
         }
         //updateInitialPoseByImu();
         updateTransformation();

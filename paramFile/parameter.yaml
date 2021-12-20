@@ -11,7 +11,7 @@ pattern_select_switch: 1            # 0是人员跟随，1是自主导航
 #单雷达人员跟踪与自主避障算法参数
 visualize: true
 #pcapAddr: '/home/ljh/lidarData/forest/nanyilou/trees_with_object_lidar16.pcap'
-pcapAddr: ''
+pcapAddr: '/home/ljh/lidarData/lidarOdometry/odom3.pcap'
 
 #地面分割算法参数
 n_threads: 4            # 使用线程数量
@@ -21,8 +21,8 @@ n_bins: 60             # number of radial bins.
 n_segments: 360         # number of radial segments.
 max_dist_to_line: 0.05  # maximum vertical distance of point to line to be considered ground.
 #sensor_height: 0.503      # sensor height above ground.
-#sensor_height: 1.05
-sensor_height: 0.85
+sensor_height: 1.05
+#sensor_height: 0.85
 max_slope: 0.3          # maximum slope of a ground line.
 max_fit_error: 0.05     # maximum error of a point during line fit.
 long_threshold: 1.0     # distance between points after which they are considered far from each other.

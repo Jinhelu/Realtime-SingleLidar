@@ -38,6 +38,18 @@ void FeatureExtraction::initializationValue(){
     cloudSmoothness_.resize(N_SCAN * Horizon_SCAN);
 }
 
+// 雷达坐标系到运动坐标系的变换
+void FeatureExtraction::coordinateTransform(){
+    PointT_I point;
+    for(size_t i=0; i<segmentedCloud_->points.size(); i++){
+        point.x = segmentedCloud_->points[i].y;
+        point.y = segmentedCloud_->points[i].z;
+        point.z = segmentedCloud_->points[i].x;
+        point.intensity = segmentedCloud_->points[i].intensity;
+        segmentedCloud_->points[i] = point;
+    }
+}
+
 // 计算平滑程度
 void FeatureExtraction::calculateSmoothness(){
     int cloudSize = segmentedCloud_->points.size();
@@ -215,7 +227,8 @@ void FeatureExtraction::runFeatureAssociation(const pcl::PointCloud<PointT_I>::P
     // 接收输入参数
     *segmentedCloud_ = *segmentedCloud;
     segMsg_ = segInfo; 
-
+    // 进行雷达坐标系到运动坐标系的变换
+    coordinateTransform();
     // // 主要进行的处理是将点云数据进行坐标变换，进行插补等工作,畸变矫正
     // adjustDistortion(); 
     // 不完全按照公式进行光滑性计算，并保存结果
